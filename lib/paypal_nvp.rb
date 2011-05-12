@@ -1,3 +1,4 @@
+require "logger"
 require "net/https"
 require "cgi"
 
@@ -5,17 +6,18 @@ class PaypalNVP
   def self.included(base)
     base.extend ClassMethods
   end
-    
+
   def initialize(sandbox = false, extras = {})
+    @logger = extras[:logger] || logger.new(STDOUT)
     type = sandbox ? "sandbox" : "live"
     config = YAML.load_file("#{RAILS_ROOT}/config/paypal.yml") rescue nil
     @require_ssl_certs = extras[:require_ssl_certs].nil?
-    
+
     # by default we use the 50.0 API version
     extras[:version] ||= "50.0"
-    
+
     if config
-      @url  = config[type]["url"] 
+      @url  = config[type]["url"]
       @user = config[type]["user"]
       @pass = config[type]["pass"]
       @cert = config[type]["cert"]
@@ -35,8 +37,8 @@ class PaypalNVP
     data.each do |key, value|
       qs << "#{key.to_s.upcase}=#{URI.escape(value.to_s)}"
     end
-    qs = "#{qs * "&"}"    
-    
+    qs = "#{qs * "&"}"
+
     uri = URI.parse(@url)
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
@@ -46,7 +48,7 @@ class PaypalNVP
       http.verify_mode = OpenSSL::SSL::VERIFY_PEER
       http.verify_depth = 5
     else
-      puts "WARNING: no ssl certs found. Paypal communication will be insecure. DO NOT DEPLOY"
+      @logger.info "WARNING: no ssl certs found. Paypal communication will be insecure. DO NOT DEPLOY"
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     end
 
@@ -61,8 +63,8 @@ class PaypalNVP
         a = element.split("=")
         data[a[0]] = CGI.unescape(a[1]) if a.size == 2
       end
-    end 
+    end
     data
   end
-    
+
 end
