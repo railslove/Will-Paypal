@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.7.2}
   s.summary = %q{Paypal NVP API Class.}
   
-  s.add_development_dependency "rspec", "~> 2.1.0"
+  s.add_development_dependency "rspec", "~> 2.6.0"
   
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
