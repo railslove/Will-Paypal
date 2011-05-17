@@ -2,7 +2,7 @@ require "logger"
 require "net/https"
 require "cgi"
 
-class PaypalNVP
+class PaypalNvp
 
   attr_accessor :config, :logger
   
@@ -15,7 +15,7 @@ class PaypalNVP
   
   def initialize(config={})
     self.config = DEFAULT_OPTIONS.merge(config)
-    self.logger = args.delete(:logger) || Logger.new(STDOUT)
+    self.logger = config.delete(:logger) || Logger.new(STDOUT)
   end
 
   def query_string_for(data)
@@ -30,6 +30,15 @@ class PaypalNVP
       query << "#{key.to_s.upcase}=#{URI.escape(value.to_s)}"
     end
     query.join("&")
+  end
+  
+  def hash_from_query_string(query_string)
+    hash = {}
+    query_string.split("&").each do |element|
+      a = element.split("=")
+      hash[a[0]] = CGI.unescape(a[1]) if a.size == 2
+    end
+    hash
   end
   
   def call_paypal(data)
@@ -51,10 +60,7 @@ class PaypalNVP
     
     response_hash = { :response => response }
     if response.kind_of? Net::HTTPSuccess
-      response.body.split("&").each do |element|
-        a = element.split("=")
-        response_hash[a[0]] = CGI.unescape(a[1]) if a.size == 2
-      end
+      response_hash.merge! self.hash_from_query_string(response.body)
     end
     response_hash
   end
