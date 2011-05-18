@@ -22,7 +22,8 @@ class PaypalNvp
     data.merge!({
      "USER"       => self.config[:user],
      "PWD"        => self.config[:password],
-     "SIGNATURE"  => self.config[:signature]
+     "SIGNATURE"  => self.config[:signature],
+     "VERSION"    => self.config[:version]
     })
     data.merge!(self.config[:params])
     query = []
@@ -57,7 +58,7 @@ class PaypalNvp
     end
 
     response = http.request_post(uri.path, self.query_string_for(data))
-
+    puts "test".inspect
     response_hash = { :status => response.code, :body => response.body, :parsed_body => {} }
 
     if response.kind_of? Net::HTTPSuccess
