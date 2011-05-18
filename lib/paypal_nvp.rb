@@ -5,23 +5,23 @@ require "cgi"
 class PaypalNvp
 
   attr_accessor :config, :logger
-  
+
   DEFAULT_OPTIONS = {
-    :version => "50.0",
+    :version => "72.0",
     :sandbox => false,
-    :url => "",
     :params => {}
   }
-  
+
   def initialize(config={})
     self.config = DEFAULT_OPTIONS.merge(config)
     self.logger = config.delete(:logger) || Logger.new(STDOUT)
+    self.config[:url] ||= self.config[:sandbox] ? "https://api-3t.sandbox.paypal.com/nvp" : "https://api-3t.paypal.com/nvp"
   end
 
   def query_string_for(data)
     data.merge!({
      "USER"       => self.config[:user],
-     "PWD"        => self.config[:password], 
+     "PWD"        => self.config[:password],
      "SIGNATURE"  => self.config[:signature]
     })
     data.merge!(self.config[:params])
@@ -31,7 +31,7 @@ class PaypalNvp
     end
     query.join("&")
   end
-  
+
   def hash_from_query_string(query_string)
     hash = {}
     query_string.split("&").each do |element|
@@ -40,10 +40,10 @@ class PaypalNvp
     end
     hash
   end
-  
+
   def call_paypal(data)
     uri = URI.parse(self.config[:url])
-    
+
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
     rootCA = '/etc/ssl/certs'
@@ -57,10 +57,11 @@ class PaypalNvp
     end
 
     response = http.request_post(uri.path, self.query_string_for(data))
-    
-    response_hash = { :response => response }
+
+    response_hash = { :status => response.code, :body => response.body, :parsed_body => {} }
+
     if response.kind_of? Net::HTTPSuccess
-      response_hash.merge! self.hash_from_query_string(response.body)
+      response_hash[:parsed_body].merge! self.hash_from_query_string(response.body)
     end
     response_hash
   end
