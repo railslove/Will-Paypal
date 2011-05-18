@@ -35,32 +35,3 @@ Gem::Specification.new do |s|
   else
   end
 end
-
-
-# -*- encoding: utf-8 -*-
-$:.push File.expand_path("../lib", __FILE__)
-require "payango_helpers/version"
-
-Gem::Specification.new do |s|
-  s.name        = "payango_helpers"
-  s.version     = PayangoHelpers::VERSION
-  s.platform    = Gem::Platform::RUBY
-  s.authors     = ["Red Davis"]
-  s.email       = ["red@railslove.com"]
-  s.homepage    = ""
-  s.summary     = %q{Payango code helpers}
-  s.description = %q{Payango code helpers for code that we use in multiple module}
-
-  s.rubyforge_project = "payango_helpers"
-
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
-  s.add_dependency "thor"
-  s.add_dependency "activerecord", "3.0.6"
-  s.add_dependency "activesupport"
-  s.add_dependency "factory_girl"
-  s.add_dependency "faker"
-  s.add_dependency "uuidtools"
-end
