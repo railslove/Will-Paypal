@@ -2,13 +2,13 @@
 
 Gem::Specification.new do |s|
   s.name = %q{will_paypal}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
   s.platform    = Gem::Platform::RUBY
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Bumann - Railslove", "Jan Kus - Railslove"]
   s.description = %q{Paypal NVP API Class.}
-  s.email = %q{michael@railslove.com jan@railslove.com}
+  s.email = ["michael@railslove.com", "jan@railslove.com"]
   s.extra_rdoc_files = ["lib/will_paypal.rb", "README.rdoc"]
   s.files = ["init.rb", "lib/will_paypal.rb", "Manifest", "Rakefile", "README.rdoc", "will_paypal.gemspec"]
   s.homepage = %q{https://github.com/railslove/Will-Paypal}
