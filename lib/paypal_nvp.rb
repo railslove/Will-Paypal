@@ -58,7 +58,6 @@ class PaypalNvp
     end
 
     response = http.request_post(uri.path, self.query_string_for(data))
-    puts "test".inspect
     response_hash = { :status => response.code, :body => response.body, :parsed_body => {} }
 
     if response.kind_of? Net::HTTPSuccess
