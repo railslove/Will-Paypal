@@ -1,43 +1,55 @@
 = Paypal NVP
 
-Paypal NVP allow to connect your Ruby on Rails application to the Paypal NVP API.
+Will Paypal allow to connect your Ruby on Rails application to the Paypal NVP API. It's based on the Paypal NVP Gem https://github.com/solisoft/paypal_nvp but completely rewritten.
 
 == Installation
 
 The recommended way is that you get the gem:
 
-  $ sudo gem install paypal_nvp
+  $ sudo gem install will_paypal
 
-PaypalNVP need an optional paypal.yml file in your config directory (Rails App).
-Or you can specify parameter within the constructor
+Specify the API-Credentials within the constructor, add a logger. You can also use a 'settings.yml' to put everything there
 
   # All those fields are mandatory
 
   sandbox:
-    url:  "https://api-3t.sandbox.paypal.com/nvp"
+    url:  "https://api-3t.sandbox.paypal.com/nvp" (default)
     user: "o.bonn_1237393081_biz_api1.solisoft.net"
-    pass: "1237393093"
-    cert:  "AU2Yv5COwWPCfeYLv34Z766F-gfNAzX6LaQE6VZkHMRq35Gmite-bMXu"
+    password: "1237393093"
+    signature:  "AU2Yv5COwWPCfeYLv34Z766F-gfNAzX6LaQE6VZkHMRq35Gmite-bMXu"
+    version: "72.0" (default)
 
   live:
-    url:  "https://api-3t.paypal.com/nvp"
+    url:  "https://api-3t.paypal.com/nvp" (default)
     user: "o.bonn_1237393081_biz_api1.solisoft.net"
-    pass: "1237393093"
-    cert:  "AU2Yv5COwWPCfeYLv34Z766F-gfNAzX6LaQE6VZkHMRq35Gmite-bMXu"
-  
+    password: "1237393093"
+    signature:  "AU2Yv5COwWPCfeYLv34Z766F-gfNAzX6LaQE6VZkHMRq35Gmite-bMXu"
+    version: "72.0" (default)
+
 == Example usage
 
-  p = PaypalNVP.new(true) # true mean "use sandbox"
-  # Or you can specify paramaters directly
-  # p = PaypalNVP.new(true, { :user => "o.bonn_1237393081_biz_api1.solisoft.net", :pass => "1237393093", :cert => "AU2Yv5COwWPCfeYLv34Z766F-gfNAzX6LaQE6VZkHMRq35Gmite-bMXu", :url => "https://api-3t.sandbox.paypal.com/nvp" })
+  p = WillPaypal.new(:user => Settings.payment.paypal.merchant, :password => Settings.payment.paypal.pass, :sandbox => Settings.payment.paypal.sandbox, :signature => Settings.payment.paypal.cert, :version => "72.0", :logger => logger)
+
   data = {
-    :version => "50.0", # Default is 50.0 as well... but now you can specify it
     :method => "MyPaypalMethod",
     :amt => "55"
     # other params needed
   }
   result = p.call_paypal(data) # will return a hash
-  puts result["ACK"] # Success
+  puts result[:parsed_body]["ACK"] # Success
+
+  The Result-Hash looks like that:
+
+    :parsed_body=>{
+      "TIMESTAMP"=>"2011-05-19T00:25:19Z",
+      "BUILD"=>"1882144",
+      "VERSION"=>"72.0",
+      "CORRELATIONID"=>"correlationid",
+      "TOKEN"=>"mytoken",
+      "ACK"=>"Success"
+      },
+    :status=>"200",
+    :body=>"TOKEN=mytoken&TIMESTAMP=2011%2d05%2d19T00%3a25%3a19Z&CORRELATIONID=correlationid&ACK=Success&VERSION=72%2e0&BUILD=1882144"
 
 == PAYPAL API Documentation
 
