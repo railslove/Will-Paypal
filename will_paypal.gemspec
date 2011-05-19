@@ -1,24 +1,23 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{paypal_nvp}
-  s.version = "0.2.0"
+  s.name = %q{will_paypal}
+  s.version = "0.1.0"
   s.platform    = Gem::Platform::RUBY
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Olivier BONNAURE - Direct Interactive LLC"]
-
+  s.authors = ["Michael Bumann - Railslove", "Jan Kus - Railslove"]
   s.description = %q{Paypal NVP API Class.}
-  s.email = %q{o.bonnaure@directinteractive.com}
-  s.extra_rdoc_files = ["lib/paypal_nvp.rb", "README.rdoc"]
-  s.files = ["init.rb", "lib/paypal_nvp.rb", "Manifest", "Rakefile", "README.rdoc", "paypal_nvp.gemspec"]
-  s.homepage = %q{http://github.com/solisoft/paypal_nvp}
-  s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Paypal_nvp", "--main", "README.rdoc"]
+  s.email = %q{michael@railslove.com jan@railslove.com}
+  s.extra_rdoc_files = ["lib/will_paypal.rb", "README.rdoc"]
+  s.files = ["init.rb", "lib/will_paypal.rb", "Manifest", "Rakefile", "README.rdoc", "will_paypal.gemspec"]
+  s.homepage = %q{https://github.com/railslove/Will-Paypal}
+  s.rdoc_options = ["--line-numbers", "--inline-source", "--title", "Will_Paypal", "--main", "README.rdoc"]
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{paypal_nvp}
+  s.rubyforge_project = %q{will_paypal}
   s.rubygems_version = %q{1.7.2}
   s.summary = %q{Paypal NVP API Class.}
 

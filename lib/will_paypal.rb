@@ -2,7 +2,7 @@ require "logger"
 require "net/https"
 require "cgi"
 
-class PaypalNvp
+class WillPaypal
 
   attr_accessor :config, :logger
 

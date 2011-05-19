@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    paypal_nvp (0.2.0)
+    will_paypal (0.1.0)
 
 GEM
   remote: http://rubygems.org/
@@ -22,5 +22,5 @@ PLATFORMS
 
 DEPENDENCIES
   fakeweb
-  paypal_nvp!
   rspec (~> 2.6.0)
+  will_paypal!
