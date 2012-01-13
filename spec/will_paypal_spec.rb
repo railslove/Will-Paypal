@@ -88,7 +88,7 @@ describe "WillPaypal" do
         http_response = double("response")
         http_response.should_receive(:code)
         http_response.should_receive(:body)
-        http.should_receive(:request_post).with("/nvp", "USER=team_1220115929_biz_api1.example.com&SIGNATURE=&VERSION=72.0&PWD=").and_return(http_response)
+        http.should_receive(:request_post).with("/nvp", "PWD=&SIGNATURE=&USER=team_1220115929_biz_api1.example.com&VERSION=72.0").and_return(http_response)
         http.should_receive(:use_ssl=).with(true)
         http.should_receive(:verify_mode=).with(OpenSSL::SSL::VERIFY_PEER)
         http.should_receive(:ca_path=).with('/etc/ssl/certs')
@@ -111,7 +111,7 @@ describe "WillPaypal" do
         http_response.should_receive(:code)
         http_response.should_receive(:body)
         http.should_receive(:use_ssl=).with(true)
-        http.should_receive(:request_post).with("/nvp", "USER=team_1220115929_biz_api1.example.com&SIGNATURE=&VERSION=72.0&PWD=").and_return(http_response)
+        http.should_receive(:request_post).with("/nvp", "PWD=&SIGNATURE=&USER=team_1220115929_biz_api1.example.com&VERSION=72.0").and_return(http_response)
         http.should_receive(:verify_mode=).with(OpenSSL::SSL::VERIFY_NONE)
         paypal.call_paypal({})
       end

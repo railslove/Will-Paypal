@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    will_paypal (0.1.0)
+    will_paypal (0.1.1)
 
 GEM
   remote: http://rubygems.org/
