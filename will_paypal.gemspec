@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{will_paypal}
-  s.version = "0.1.1"
+  s.version = "0.1.2"
   s.platform    = Gem::Platform::RUBY
 
   s.required_rubygems_version = Gem::Requirement.new(">= 1.2") if s.respond_to? :required_rubygems_version=
