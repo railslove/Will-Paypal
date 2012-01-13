@@ -24,6 +24,16 @@ describe "WillPaypal" do
     end
   end
 
+  describe "Converting query strings back and forth" do
+    let(:paypal) { WillPaypal.new }
+    it 'should succeed' do
+      hash = {'NAME' => 'Barnes & Noble', 'TITLE' => 'Barnes and Noble'}
+      convertible = paypal.hash_from_query_string(paypal.query_string_for(hash))
+      convertible['NAME'].should eql(hash['NAME'])
+      convertible['TITLE'].should eql(hash['TITLE'])
+    end
+  end
+
   describe "Request to Paypal" do
 
     describe "Query String" do
