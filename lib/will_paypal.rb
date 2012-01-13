@@ -28,9 +28,9 @@ class WillPaypal
     data.merge!(self.config[:params])
     query = []
     data.each do |key, value|
-      query << "#{key.to_s.upcase}=#{URI.escape(value.to_s)}"
+      query << "#{key.to_s.upcase}=#{CGI.escape(value.to_s)}"
     end
-    query.join("&")
+    query.sort.join("&")
   end
 
   def hash_from_query_string(query_string)
