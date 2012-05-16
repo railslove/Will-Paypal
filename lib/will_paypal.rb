@@ -46,6 +46,10 @@ class WillPaypal
     uri = URI.parse(self.config[:url])
 
     http = Net::HTTP.new(uri.host, uri.port)
+    if self.config[:timeout].present?
+      http.read_timeout = self.config[:timeout]
+    end
+
     http.use_ssl = true
     rootCA = '/etc/ssl/certs'
     if File.directory? rootCA
