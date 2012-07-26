@@ -7,9 +7,10 @@ class WillPaypal
   attr_accessor :config, :logger
 
   DEFAULT_OPTIONS = {
-    :version => "72.0",
-    :sandbox => false,
-    :params => {}
+    :cert_path => '/etc/ssl/certs',
+    :version   => "72.0",
+    :sandbox   => false,
+    :params    => {}
   }
 
   def initialize(config={})
@@ -45,20 +46,21 @@ class WillPaypal
   def call_paypal(data)
     uri = URI.parse(self.config[:url])
 
-    http = Net::HTTP.new(uri.host, uri.port)
-    if self.config[:timeout].present?
-      http.read_timeout = self.config[:timeout]
-    end
+    http                = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl        = true
+    http.read_timeout   = self.config[:timeout] if self.config[:timeout]
 
-    http.use_ssl = true
-    rootCA = '/etc/ssl/certs'
-    if File.directory? rootCA
-      http.ca_path = rootCA
-      http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      http.verify_depth = 5
+    http.verify_mode    = OpenSSL::SSL::VERIFY_PEER
+    http.verify_depth   = 5
+
+    if self.config[:cert_file] && File.exists?(self.config[:cert_file])
+      http.ca_file = self.config[:cert_file]
+    elsif File.directory?(self.config[:cert_path])
+      http.ca_path = self.config[:cert_path]
     else
       self.logger.warn "WARNING: no ssl certs found. Paypal communication will be insecure. DO NOT DEPLOY"
-      http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      http.verify_mode  = OpenSSL::SSL::VERIFY_NONE
+      http.verify_depth = nil
     end
 
     response = http.request_post(uri.path, self.query_string_for(data))
