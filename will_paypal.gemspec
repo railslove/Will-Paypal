@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rspec", "~> 2.13.0"
   s.add_development_dependency "fakeweb"
+  s.add_development_dependency "rake"
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
