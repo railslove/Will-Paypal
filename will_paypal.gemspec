@@ -21,7 +21,7 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.7.2}
   s.summary = %q{Paypal NVP API Class.}
 
-  s.add_development_dependency "rspec", "~> 2.6.0"
+  s.add_development_dependency "rspec", "~> 2.13.0"
   s.add_development_dependency "fakeweb"
 
   if s.respond_to? :specification_version then
