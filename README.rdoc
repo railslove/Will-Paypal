@@ -1,6 +1,6 @@
 = Paypal NVP
 
-{<img src="https://www.travis-ci.org/dockyard/ember-validations.png?branch=master" alt="Build Status" />}[https://www.travis-ci.org/dockyard/ember-validations]
+{<img src="https://www.travis-ci.org/railslove/Will-Paypal.png?branch=master" alt="Build Status" />}[https://www.travis-ci.org/railslove/Will-Paypal]
 
 Will Paypal allow to connect your Ruby on Rails application to the Paypal NVP API. It's based on the Paypal NVP Gem https://github.com/solisoft/paypal_nvp but completely rewritten.
 
